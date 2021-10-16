@@ -1,0 +1,41 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > .title {
+  padding: 20px 0;
+  margin: 0;
+  text-align: center;
+  color: dodgerblue;
+}
+
+.container > .todo-form {
+}
+
+.container > .todo-list {
+  width: 100%;
+  flex-grow: 1;
+  max-width: 1024px;
+}
+
+.container > .todo-list > .todo-item {
+  display: flex;
+  margin: 5px 0;
+}
+
+.container > .todo-list > .todo-item > span {
+  flex-grow: 1;
+  padding: 0 10px;
+}
+
+.container > .filter-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.container > .filter-wrapper > button {
+  flex-grow: 1;
+}
