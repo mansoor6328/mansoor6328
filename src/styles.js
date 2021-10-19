@@ -1,6 +1,6 @@
 const styles = {
   header: {
-    color: "red",
+    color: 'red',
     fontSize: 30,
   },
 };
