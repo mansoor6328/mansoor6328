@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import { Formik } from 'formik';
 import './todoStyle.css';
 
 // Two type of components in React JS
@@ -8,9 +9,8 @@ import './todoStyle.css';
 class Todo extends Component {
   state = {
     todoList: [],
+    filterType: 'all',
   };
-
-  todoInput = createRef();
 
   // onChangeText = (event) => {
   //   this.setState({
@@ -18,46 +18,126 @@ class Todo extends Component {
   //   });
   // };
 
-  onAddTodo = (event) => {
-    event.preventDefault();
+  onAddTodo = (values, actions) => {
     // this.setState({
     //   todoList: [...this.state.todoList, this.state.todoText],
     //   todoText: "",
     // });
-    this.setState(({ todoList }) => ({
-      todoList: [
-        ...todoList,
-        { text: this.todoInput.current.value, id: new Date().valueOf() },
-      ],
+    this.setState(
+      ({ todoList }) => ({
+        todoList: [
+          ...todoList,
+          {
+            text: values.todoText,
+            id: new Date().valueOf(),
+            isDone: false,
+          },
+        ],
+      }),
+      () => {
+        actions.resetForm();
+      }
+    );
+  };
+
+  completeTodo = (item) => {
+    this.setState(({ todoList: list }) => ({
+      todoList: list.map((x) => {
+        if (x.id === item.id) {
+          return { ...x, isDone: !x.isDone };
+        }
+        return x;
+      }),
     }));
   };
 
+  deleteTodo = (item) => {
+    this.setState(({ todoList: list }) => ({
+      todoList: list.filter((x) => x.id !== item.id),
+    }));
+  };
+
+  onFilter = (type) => {
+    this.setState({ filterType: type });
+  };
+
   render() {
-    const { todoList } = this.state;
+    const { todoList, filterType } = this.state;
     return (
       <div className="container">
         <h1 className="title">Todo App</h1>
-        <form className="todo-form" onSubmit={this.onAddTodo}>
-          <input
-            ref={this.todoInput}
-            type="text"
-            placeholder="Please write your todo here..."
-          />
-          <button type="submit">Add Todo</button>
-        </form>
+        <Formik
+          initialValues={{
+            todoText: '',
+          }}
+          validate={(values) => {
+            const errors = {};
+            if (!values.todoText) {
+              errors.todoText = 'Required...';
+            }
+            return errors;
+          }}
+          onSubmit={this.onAddTodo}
+        >
+          {({ values, handleChange, handleSubmit, errors }) => (
+            <form className="todo-form" onSubmit={handleSubmit}>
+              <div>
+                <input
+                  name="todoText"
+                  value={values.todoText}
+                  onChange={handleChange}
+                  type="text"
+                  style={{
+                    borderColor: errors.todoText ? 'red' : 'gray',
+                  }}
+                  placeholder="Please write your todo here..."
+                />
+                <button type="submit">Add Todo</button>
+              </div>
+              {!!errors.todoText && (
+                <div style={{ color: 'red' }}>{errors.todoText}</div>
+              )}
+            </form>
+          )}
+        </Formik>
         <div className="todo-list">
-          {todoList.map((item) => (
-            <div className="todo-item" key={item.id}>
-              <input type="checkbox" name="isDone" id="isDone" />
-              <span>{item.text}</span>
-              <button type="button">Delete Todo</button>
-            </div>
-          ))}
+          {todoList
+            .filter((item) => {
+              switch (filterType) {
+                case 'completed':
+                  return item.isDone;
+                case 'pending':
+                  return !item.isDone;
+                default:
+                  return true;
+              }
+            })
+            .map((item) => (
+              <div className="todo-item" key={item.id}>
+                <input
+                  type="checkbox"
+                  name="isDone"
+                  id="isDone"
+                  checked={item.isDone}
+                  onChange={() => this.completeTodo(item)}
+                />
+                <span>{item.text}</span>
+                <button type="button" onClick={() => this.deleteTodo(item)}>
+                  Delete Todo
+                </button>
+              </div>
+            ))}
         </div>
         <div className="filter-wrapper">
-          <button type="button">All</button>
-          <button type="button">Pedning</button>
-          <button type="button">Completed</button>
+          <button type="button" onClick={() => this.onFilter('all')}>
+            All
+          </button>
+          <button type="button" onClick={() => this.onFilter('pending')}>
+            Pedning
+          </button>
+          <button type="button" onClick={() => this.onFilter('completed')}>
+            Completed
+          </button>
         </div>
       </div>
     );
