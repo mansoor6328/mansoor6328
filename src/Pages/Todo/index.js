@@ -8,6 +8,7 @@ import './todoStyle.css';
 
 class Todo extends Component {
   state = {
+    todoText: '',
     todoList: [],
     filterType: 'all',
   };
@@ -28,7 +29,7 @@ class Todo extends Component {
         todoList: [
           ...todoList,
           {
-            text: values.todoText,
+            text: values.text,
             id: new Date().valueOf(),
             isDone: false,
           },
@@ -68,14 +69,15 @@ class Todo extends Component {
         <h1 className="title">Todo App</h1>
         <Formik
           initialValues={{
-            todoText: '',
+            text: '',
           }}
           validate={(values) => {
-            const errors = {};
-            if (!values.todoText) {
-              errors.todoText = 'Required...';
+            const error = {};
+
+            if (!values.text) {
+              error.text = 'Required...';
             }
-            return errors;
+            return error;
           }}
           onSubmit={this.onAddTodo}
         >
@@ -83,23 +85,19 @@ class Todo extends Component {
             <form className="todo-form" onSubmit={handleSubmit}>
               <div>
                 <input
-                  name="todoText"
-                  value={values.todoText}
-                  onChange={handleChange}
+                  value={values.text}
+                  name="text"
                   type="text"
-                  style={{
-                    borderColor: errors.todoText ? 'red' : 'gray',
-                  }}
                   placeholder="Please write your todo here..."
+                  onChange={handleChange}
                 />
                 <button type="submit">Add Todo</button>
               </div>
-              {!!errors.todoText && (
-                <div style={{ color: 'red' }}>{errors.todoText}</div>
-              )}
+              {errors.text && <span>{errors.text}</span>}
             </form>
           )}
         </Formik>
+
         <div className="todo-list">
           {todoList
             .filter((item) => {
