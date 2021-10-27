@@ -4,40 +4,67 @@ import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './loginStyle.css';
+import { Paper } from '@mui/material';
 
 const useStyles = makeStyles({
   root: {
-    padding: '0 30px',
+    margin: 10,
   },
 });
 
 const Login = () => {
   const classes = useStyles();
   return (
-    <div>
-      <Formik>
-        {({}) => (
-          <form>
-            <TextField
-              className={classes.root}
-              variant="outlined"
-              label="Username"
-              id="username"
-              style={{ margin: 10 }}
-            />
-            <TextField
-              className={classes.root}
-              variant="outlined"
-              label="Password"
-              id="password"
-              type="password"
-            />
-            <Button variant="contained" fullWidth>
-              Login
-            </Button>
-          </form>
-        )}
-      </Formik>
+    <div className="login-container">
+      <Paper
+        elevation={3}
+        style={{
+          flex: 1,
+          maxWidth: 500,
+          padding: 20,
+        }}
+      >
+        <Formik>
+          {({}) => (
+            <form>
+              <div
+                style={{
+                  padding: 10,
+                }}
+              >
+                <TextField
+                  variant="outlined"
+                  label="Username"
+                  id="username"
+                  fullWidth
+                />
+              </div>
+              <div
+                style={{
+                  padding: 10,
+                }}
+              >
+                <TextField
+                  variant="outlined"
+                  label="Password"
+                  id="password"
+                  type="password"
+                  fullWidth
+                />
+              </div>
+              <div
+                style={{
+                  padding: 10,
+                }}
+              >
+                <Button variant="contained" fullWidth>
+                  Login
+                </Button>
+              </div>
+            </form>
+          )}
+        </Formik>
+      </Paper>
     </div>
   );
 };
