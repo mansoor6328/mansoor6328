@@ -29,4 +29,4 @@ const Form = ({ fields, ...rest }) => (
   </Formik>
 );
 
-export default index;
+export default Form;
