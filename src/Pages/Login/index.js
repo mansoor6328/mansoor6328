@@ -1,10 +1,12 @@
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './loginStyle.css';
 import { Paper } from '@mui/material';
+import { loginInitialValues, loginFields } from './loginFields';
+import Form from '../../components/Form';
 
 const useStyles = makeStyles({
   root: {
@@ -24,46 +26,13 @@ const Login = () => {
           padding: 20,
         }}
       >
-        <Formik>
-          {({}) => (
-            <form>
-              <div
-                style={{
-                  padding: 10,
-                }}
-              >
-                <TextField
-                  variant="outlined"
-                  label="Username"
-                  id="username"
-                  fullWidth
-                />
-              </div>
-              <div
-                style={{
-                  padding: 10,
-                }}
-              >
-                <TextField
-                  variant="outlined"
-                  label="Password"
-                  id="password"
-                  type="password"
-                  fullWidth
-                />
-              </div>
-              <div
-                style={{
-                  padding: 10,
-                }}
-              >
-                <Button variant="contained" fullWidth>
-                  Login
-                </Button>
-              </div>
-            </form>
-          )}
-        </Formik>
+        <Form
+          initialValues={loginInitialValues}
+          onSubmit={(value) => {
+            console.log(value);
+          }}
+          fields={loginFields}
+        />
       </Paper>
     </div>
   );
