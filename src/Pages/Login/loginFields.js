@@ -2,12 +2,13 @@ import Input from '../../components/Input';
 
 export const loginFields = [
   {
-    name: 'username',
+    name: 'email',
     component: Input,
-    label: 'Username',
+    label: 'Email',
+    type: 'email',
     validate: (value) => {
       if (!value) {
-        return 'Username is required.';
+        return 'Email is required.';
       }
       return '';
     },
@@ -27,6 +28,6 @@ export const loginFields = [
 ];
 
 export const loginInitialValues = {
-  username: '',
+  email: '',
   password: '',
 };

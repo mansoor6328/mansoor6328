@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "email": "olivier@mail.com",
+      "password": "$2a$10$ULiPFSr3jFsnIcoytdfi0.62TsaAsDxK.hkVuvvMeQqV3QirytpI2",
+      "firstname": "Olivier",
+      "lastname": "Monge",
+      "age": 32,
+      "id": 1
+    }
+  ]
+}
