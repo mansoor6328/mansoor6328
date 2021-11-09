@@ -2,6 +2,7 @@ import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
+import Register from './Pages/Register';
 
 const routes = [
   {
@@ -27,6 +28,12 @@ const routes = [
     path: '/login',
     component: Login,
     title: 'Login',
+    isAuthRequired: false,
+  },
+  {
+    path: '/register',
+    component: Register,
+    title: 'Register',
     isAuthRequired: false,
   },
   {

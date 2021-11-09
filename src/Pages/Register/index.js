@@ -1,26 +1,15 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
-import { makeStyles } from '@mui/styles';
-import './loginStyle.css';
 import { Paper } from '@mui/material';
-import { loginInitialValues, loginFields } from './loginFields';
+import { registerInitialValues, registerFields } from './registerFields';
 import Form from '../../components/Form';
 
-const useStyles = makeStyles({
-  root: {
-    margin: 10,
-  },
-});
-
-const Login = ({ history }) => {
-  const classes = useStyles();
-
-  const onLogin = async (values, actions) => {
-    console.warn(actions);
+const Register = ({ history }) => {
+  const onRegister = async (values, actions) => {
+    const { confirmPassword, ...rest } = values;
     try {
-      const res = await fetch('http://localhost:3000/login', {
+      const res = await fetch('http://localhost:3000/register', {
         method: 'POST',
-        body: JSON.stringify(values),
+        body: JSON.stringify(rest),
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -40,6 +29,14 @@ const Login = ({ history }) => {
     }
   };
 
+  const validateRegisterForm = (values) => {
+    const errors = {};
+    if (values.password !== values.confirmPassword) {
+      errors.confirmPassword = 'Password and confirm password should match.';
+    }
+    return errors;
+  };
+
   return (
     <div className="login-container">
       <Paper
@@ -51,18 +48,15 @@ const Login = ({ history }) => {
         }}
       >
         <Form
-          initialValues={loginInitialValues}
-          onSubmit={onLogin}
-          fields={loginFields}
-          btnText="Login"
+          validate={validateRegisterForm}
+          initialValues={registerInitialValues}
+          onSubmit={onRegister}
+          fields={registerFields}
+          btnText="Register"
         />
-        <div>
-          {`don't have an account? Please `}
-          <Link to="">Register</Link>
-        </div>
       </Paper>
     </div>
   );
 };
 
-export default Login;
+export default Register;

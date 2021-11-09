@@ -7,6 +7,14 @@
       "lastname": "Monge",
       "age": 32,
       "id": 1
+    },
+    {
+      "email": "yagnesh.modh@gmail.com",
+      "password": "$2a$10$SXgiiWxQIwLWsn0FxN2ZnO0BvqGG8kZlriQQidT6bBWGeluMSSWOq",
+      "firstname": "Yagnesh",
+      "lastname": "Modh",
+      "age": 30,
+      "id": 2
     }
   ]
 }
