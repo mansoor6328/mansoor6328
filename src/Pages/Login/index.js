@@ -3,8 +3,11 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 import './loginStyle.css';
 import { Paper } from '@mui/material';
+import axios from 'axios';
 import { loginInitialValues, loginFields } from './loginFields';
 import Form from '../../components/Form';
+import axiosInstance from '../../utils/axiosInstance';
+import { storeUserDetails } from '../../utils';
 
 const useStyles = makeStyles({
   root: {
@@ -18,25 +21,26 @@ const Login = ({ history }) => {
   const onLogin = async (values, actions) => {
     console.warn(actions);
     try {
-      const res = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        body: JSON.stringify(values),
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
+      const res = await axiosInstance.post('login', values);
 
-      console.warn(res);
+      storeUserDetails(res.data);
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data);
+      // const res = await fetch('http://localhost:3000/login', {
+      //   method: 'POST',
+      //   body: JSON.stringify(values),
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     Accept: 'application/json',
+      //   },
+      // });
+
+      // const data = await res.json();
+      // if (!res.ok) throw new Error(data);
 
       actions.resetForm();
-      history.replace('/');
+      history.go(0);
     } catch (error) {
-      console.warn(error.message);
-      actions.setErrors({ serverError: error.message });
+      actions.setErrors({ serverError: error.response.data });
     }
   };
 

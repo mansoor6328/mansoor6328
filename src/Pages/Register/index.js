@@ -2,30 +2,31 @@ import React from 'react';
 import { Paper } from '@mui/material';
 import { registerInitialValues, registerFields } from './registerFields';
 import Form from '../../components/Form';
+import axiosInstance from '../../utils/axiosInstance';
+import { storeUserDetails } from '../../utils';
 
 const Register = ({ history }) => {
   const onRegister = async (values, actions) => {
     const { confirmPassword, ...rest } = values;
     try {
-      const res = await fetch('http://localhost:3000/register', {
-        method: 'POST',
-        body: JSON.stringify(rest),
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
+      const res = await axiosInstance.post('register', rest);
+      storeUserDetails(res.data);
+      //   const res = await fetch('http://localhost:3000/register', {
+      //     method: 'POST',
+      //     body: JSON.stringify(rest),
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       Accept: 'application/json',
+      //     },
+      //   });
 
-      console.warn(res);
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data);
+      //   const data = await res.json();
+      //   if (!res.ok) throw new Error(data);
 
       actions.resetForm();
       history.replace('/');
     } catch (error) {
-      console.warn(error.message);
-      actions.setErrors({ serverError: error.message });
+      actions.setErrors({ serverError: error.response.data });
     }
   };
 

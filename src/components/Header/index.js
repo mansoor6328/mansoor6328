@@ -12,11 +12,13 @@ const Header = ({ routes }) => (
       {/* <MenuIcon height={24} width={24} fill="red" /> */}
       <nav>
         <ul>
-          {routes.map((x) => (
-            <li key={x.path}>
-              <Link to={x.path}>{x.title}</Link>
-            </li>
-          ))}
+          {routes
+            .filter((x) => x.isAuthRequired)
+            .map((x) => (
+              <li key={x.path}>
+                <Link to={x.path}>{x.title}</Link>
+              </li>
+            ))}
         </ul>
       </nav>
     </div>
