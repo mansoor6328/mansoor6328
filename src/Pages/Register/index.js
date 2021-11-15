@@ -10,7 +10,7 @@ const Register = ({ history }) => {
     const { confirmPassword, ...rest } = values;
     try {
       const res = await axiosInstance.post('register', rest);
-      storeUserDetails(res.data);
+      storeUserDetails(res);
       //   const res = await fetch('http://localhost:3000/register', {
       //     method: 'POST',
       //     body: JSON.stringify(rest),
@@ -26,7 +26,7 @@ const Register = ({ history }) => {
       actions.resetForm();
       history.replace('/');
     } catch (error) {
-      actions.setErrors({ serverError: error.response.data });
+      actions.setErrors({ serverError: error });
     }
   };
 

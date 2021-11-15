@@ -23,7 +23,7 @@ const Login = ({ history }) => {
     try {
       const res = await axiosInstance.post('login', values);
 
-      storeUserDetails(res.data);
+      storeUserDetails(res);
 
       // const res = await fetch('http://localhost:3000/login', {
       //   method: 'POST',
@@ -40,7 +40,7 @@ const Login = ({ history }) => {
       actions.resetForm();
       history.go(0);
     } catch (error) {
-      actions.setErrors({ serverError: error.response.data });
+      actions.setErrors({ serverError: error });
     }
   };
 
