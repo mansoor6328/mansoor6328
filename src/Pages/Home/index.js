@@ -9,20 +9,25 @@ import Child2 from './Child2';
 // 4 Stages of Life Cycle Methods
 
 // 1. Mounting
+
 // -> 1. Constructor
 // -> 2. getDerivedStateFromProps
 // -> 3. Render
 // -> 4. componentDidMount
 
 // 2. Updating
+
 // -> 1. getDerivedStateFromProps
 // -> 2. shouldComponentUpdate
-// -> 3. render
+// -> 3. getSnapshotBeforeUpdate
 // -> 4. componentDidUpdate
 
 // 3. Unmounting
+// -> 1. componentWillUnmount
 
 // 4. Error
+// -> 1. getDerivedStateFromError
+// -> 2. componentDidCatch
 
 class Home extends Component {
   state = {
@@ -84,6 +89,16 @@ class Home extends Component {
     // console.log(document.getElementsByTagName('h1'));
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return 'some data';
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.log(snapshot);
+  }
+
+  componentWillUnmount() {}
+
   incrementCounter = () => {
     // this.setState({
     //   counter: this.state.counter + 1,
@@ -103,22 +118,38 @@ class Home extends Component {
     // alert('hello');
   };
 
-  componentDidUpdate(prevProps, prevState) {}
+  static getDerivedStateFromError(error) {
+    return {
+      error: !!error,
+    };
+  }
+
+  componentDidCatch(error, info) {
+    // Log The errors
+    console.log(error);
+    console.log(info);
+  }
 
   render() {
     console.log('render');
+    const { pageName, counter, error } = this.state;
+
+    if (error) {
+      return <h1>Some thing went wrong</h1>;
+    }
+
     return (
       <div>
-        <p>{`my current page is ${this.state.pageName}`}</p>
+        <p>{`my current page is ${pageName}`}</p>
         <h1 ref={this.headerRef} id="heading">
-          {this.state.counter}
+          {counter}
         </h1>
         <button type="button" onClick={this.incrementCounter}>
           Increment Counter
         </button>
 
         <Child1 />
-        <Child2 />
+        {counter < 5 && <Child2 />}
       </div>
     );
   }
