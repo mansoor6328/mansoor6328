@@ -12,6 +12,7 @@ import './headerStyle.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { CartContext } from '../../context/cartContext';
 
 const Header = ({ routes }) => (
   <AppBar position="static">
@@ -35,17 +36,21 @@ const Header = ({ routes }) => (
             {x.title}
           </Button>
         ))}
-      <IconButton
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ mr: 2 }}
-      >
-        <Badge badgeContent={0} color="error">
-          <ShoppingCartIcon />
-        </Badge>
-      </IconButton>
+      <CartContext.Consumer>
+        {({ cart }) => (
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <Badge badgeContent={cart.length} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        )}
+      </CartContext.Consumer>
       <IconButton
         size="large"
         edge="start"
