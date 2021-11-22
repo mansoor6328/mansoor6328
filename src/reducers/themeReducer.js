@@ -11,4 +11,3 @@ const themeReducer = (state = initialThemeState, { type, payload }) => {
 };
 
 export default themeReducer;
-hidjakna
