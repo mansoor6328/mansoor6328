@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 import { Button } from '@mui/material';
 import { Field, Formik } from 'formik';
 import React from 'react';
@@ -5,10 +7,6 @@ import React from 'react';
 const Form = ({ fields, btnText, ...rest }) => (
   <Formik
     {...rest}
-    // initialValues={loginInitialValues}
-    // onSubmit={(value) => {
-    //   console.log(value);
-    // }}
   >
     {({ handleSubmit, errors, isSubmitting }) => (
       <form onSubmit={handleSubmit}>

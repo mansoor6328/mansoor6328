@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { Formik } from 'formik';
 import './todoStyle.css';
 
@@ -8,6 +8,7 @@ import './todoStyle.css';
 
 class Todo extends Component {
   state = {
+    // eslint-disable-next-line react/no-unused-state
     todoText: '',
     todoList: [],
     filterType: 'all',
@@ -37,7 +38,7 @@ class Todo extends Component {
       }),
       () => {
         actions.resetForm();
-      }
+      },
     );
   };
 
@@ -81,7 +82,9 @@ class Todo extends Component {
           }}
           onSubmit={this.onAddTodo}
         >
-          {({ values, handleChange, handleSubmit, errors }) => (
+          {({
+            values, handleChange, handleSubmit, errors,
+          }) => (
             <form className="todo-form" onSubmit={handleSubmit}>
               <div>
                 <input

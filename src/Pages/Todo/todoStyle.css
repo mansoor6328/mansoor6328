@@ -12,9 +12,6 @@
   color: dodgerblue;
 }
 
-.container > .todo-form {
-}
-
 .container > .todo-list {
   width: 100%;
   flex-grow: 1;

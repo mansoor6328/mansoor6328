@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React, { Component, createContext } from 'react';
 
 export const LocaleContext = createContext();

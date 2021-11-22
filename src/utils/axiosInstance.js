@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) =>
     // Do something with request error
-    Promise.reject(error)
+    Promise.reject(error),
 );
 
 // Add a response interceptor
@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

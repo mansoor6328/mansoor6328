@@ -39,24 +39,24 @@ const Register = ({ history }) => {
   };
 
   return (
-    <div className="login-container">
-      <Paper
-        elevation={3}
-        style={{
+      <div className="login-container">
+          <Paper
+            elevation={3}
+            style={{
           flex: 1,
           maxWidth: 500,
           padding: 20,
         }}
-      >
-        <Form
-          validate={validateRegisterForm}
-          initialValues={registerInitialValues}
-          onSubmit={onRegister}
-          fields={registerFields}
-          btnText="Register"
-        />
-      </Paper>
-    </div>
+          >
+              <Form
+                validate={validateRegisterForm}
+                initialValues={registerInitialValues}
+                onSubmit={onRegister}
+                fields={registerFields}
+                btnText="Register"
+              />
+          </Paper>
+      </div>
   );
 };
 

@@ -1,3 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { createContext, Component } from 'react';
 import axiosInstance from '../utils/axiosInstance';
 

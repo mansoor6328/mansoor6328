@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Button,
   Card,
@@ -13,10 +14,11 @@ import React, { Component } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { connect } from 'react-redux';
 import axiosInstance from '../../utils/axiosInstance';
 import { CartContext } from '../../context/cartContext';
 
-export default class Home extends Component {
+class Home extends Component {
   state = {
     products: [],
     error: null,
@@ -37,6 +39,8 @@ export default class Home extends Component {
   }
 
   render() {
+    console.log('localeData', this.props.localeData);
+    console.log('themeData', this.props.themeData);
     const { products, error, status } = this.state;
 
     if (error) {
@@ -45,8 +49,28 @@ export default class Home extends Component {
 
     return (
       <CartContext.Consumer>
-        {({ cart, addToCart, updateCart, deleteItem }) => (
+        {({
+          cart, addToCart, updateCart, deleteItem,
+        }) => (
           <div>
+            <button
+              type="button"
+              onClick={() => {
+                this.props.changeTheme('dark');
+              }}
+            >
+              ChangeTheme
+
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                this.props.changeLocale('fr');
+              }}
+            >
+              ChangeLocale
+
+            </button>
             {products.map((item) => {
               const cartItem = cart.find((x) => x.id === item.id);
               return (
@@ -102,65 +126,61 @@ export default class Home extends Component {
                         {I18n.toCurrency(item.price)}
                       </Typography>
                       {cartItem && (
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                          {cartItem.quantity <= 1 ? (
-                            <IconButton
-                              size="large"
-                              edge="start"
-                              color="inherit"
-                              aria-label="menu"
-                              sx={{ mr: 2 }}
-                              onClick={() => deleteItem(cartItem)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          ) : (
-                            <IconButton
-                              size="large"
-                              edge="start"
-                              color="inherit"
-                              aria-label="menu"
-                              sx={{ mr: 2 }}
-                              onClick={() =>
-                                updateCart({
-                                  ...cartItem,
-                                  quantity: cartItem.quantity - 1,
-                                })
-                              }
-                            >
-                              <RemoveIcon />
-                            </IconButton>
-                          )}
-                          <Typography component="div" variant="h5">
-                            {cartItem.quantity}
-                          </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {cartItem.quantity <= 1 ? (
                           <IconButton
                             size="large"
                             edge="start"
                             color="inherit"
                             aria-label="menu"
-                            sx={{ ml: 2 }}
-                            onClick={() =>
-                              updateCart({
-                                ...cartItem,
-                                quantity: cartItem.quantity + 1,
-                              })
-                            }
+                            sx={{ mr: 2, backgroundColor: 'gold' }}
+                            onClick={() => deleteItem(cartItem)}
                           >
-                            <AddIcon />
+                            <DeleteIcon />
                           </IconButton>
-                        </Box>
+                        ) : (
+                          <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2, backgroundColor: 'gold' }}
+                            onClick={() => updateCart({
+                              ...cartItem,
+                              quantity: cartItem.quantity - 1,
+                            })}
+                          >
+                            <RemoveIcon />
+                          </IconButton>
+                        )}
+                        <Typography component="div" variant="h5">
+                          {cartItem.quantity}
+                        </Typography>
+                        <IconButton
+                          size="large"
+                          edge="start"
+                          color="inherit"
+                          aria-label="menu"
+                          sx={{ ml: 2, backgroundColor: 'gold' }}
+                          onClick={() => updateCart({
+                            ...cartItem,
+                            quantity: cartItem.quantity + 1,
+                          })}
+                        >
+                          <AddIcon />
+                        </IconButton>
+                      </Box>
                       )}
                       {!cartItem && (
-                        <Button
-                          disabled={status.some(
-                            (x) => x.id === item.id && x.status === 'Loading'
-                          )}
-                          variant="contained"
-                          onClick={() => addToCart(item)}
-                        >
-                          Add To Cart
-                        </Button>
+                      <Button
+                        disabled={status.some(
+                          (x) => x.id === item.id && x.status === 'Loading',
+                        )}
+                        variant="contained"
+                        onClick={() => addToCart(item)}
+                      >
+                        Add To Cart
+                      </Button>
                       )}
                     </CardContent>
                   </Box>
@@ -173,3 +193,15 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = (store) => ({
+  localeData: store.locale,
+  themeData: store.theme,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeTheme: (payload) => dispatch({ type: 'change_theme', payload }),
+  changeLocale: (payload) => dispatch({ type: 'change_locale', payload }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

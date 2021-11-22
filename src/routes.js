@@ -37,7 +37,7 @@ const routes = [
     isAuthRequired: false,
   },
   {
-    path: '/:id',
+    path: '/details',
     component: Contact,
     title: 'Details',
     isAuthRequired: true,

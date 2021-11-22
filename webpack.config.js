@@ -5,7 +5,7 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'buldle'),
+    path: path.resolve(__dirname, 'bundle'),
     filename: 'main.js',
   },
   module: {

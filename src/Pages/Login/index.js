@@ -3,7 +3,6 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 import './loginStyle.css';
 import { Paper } from '@mui/material';
-import axios from 'axios';
 import { loginInitialValues, loginFields } from './loginFields';
 import Form from '../../components/Form';
 import axiosInstance from '../../utils/axiosInstance';
@@ -16,7 +15,7 @@ const useStyles = makeStyles({
 });
 
 const Login = ({ history }) => {
-  const classes = useStyles();
+  useStyles();
 
   const onLogin = async (values, actions) => {
     console.warn(actions);
@@ -61,7 +60,7 @@ const Login = ({ history }) => {
           btnText="Login"
         />
         <div>
-          {`don't have an account? Please `}
+          {'don\'t have an account? Please '}
           <Link to="">Register</Link>
         </div>
       </Paper>

@@ -16,5 +16,10 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/state-in-constructor': 0,
+    'linebreak-style': 0,
+    // 'react/jsx-indent': ['error', 4],
+    // 'no-trailing-spaces': [2, { skipBlankLines: true }],
+    // 'arrow-body-style': 0,
+    'no-console': 'off',
   },
 };
